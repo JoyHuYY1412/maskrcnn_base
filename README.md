@@ -11,8 +11,7 @@ check [train_top_b.ipynb](train_top_b.ipynb)
 
 ### path
 ```bash
-# symlink the coco dataset
-cd ~/github/maskrcnn-benchmark
+# symlink the lvis dataset
 mkdir -p datasets/lvis
 # for LVIS dataset:
 ln -s /path_to_coco_dataset/train2017 datasets/lvis/images/train2017
