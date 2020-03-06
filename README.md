@@ -42,11 +42,11 @@ add
 ```python
         "lvis_v0.5_train_topb": {
             "img_dir": "lvis/images/train2017",
-            "ann_file": "lvis/annotaions/lvis_v0.5_train_topb.json"
+            "ann_file": "lvis/annotations/lvis_v0.5_train_topb.json"
         },
         "lvis_v0.5_val_topb": {
             "img_dir": "lvis/images/val2017",
-            "ann_file": "lvis/annotaions/lvis_v0.5_val_topb.json"
+            "ann_file": "lvis/annotations/lvis_v0.5_val_topb.json"
         },
 ```
 
