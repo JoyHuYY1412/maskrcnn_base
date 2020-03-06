@@ -25,7 +25,7 @@ ln -s /path_to_generated_lvis_annotations datasets/lvis/annotations
 ```
 
 ## config to change ><
-**1. edit [e2e_mask_rcnn_R_50_FPN_1x_periodically_testing_topb_maskxrcnn_from_scratch.yaml](config/lvis/e2e_mask_rcnn_R_50_FPN_1x_periodically_testing_topb_maskxrcnn_from_scratch.yaml)**
+**1. edit [e2e_mask_rcnn_R_50_FPN_1x_periodically_testing_topb_maskxrcnn_from_scratch.yaml](https://github.com/JoyHuYY1412/maskrcnn_base/blob/master/configs/lvis/e2e_mask_rcnn_R_50_FPN_1x_periodically_testing_topb_maskxrcnn_from_scratch.yaml)**
 
 change
 ```python
@@ -53,14 +53,14 @@ add
         },
 ```
 
-**3. edit [lvis.py](maskrcnn_benchmark/data/datasets/lvis.py)**
+**3. edit [lvis.py](https://github.com/JoyHuYY1412/maskrcnn_base/blob/master/maskrcnn_benchmark/data/datasets/lvis.py)**
 
 edit
 ```python
 sorted_id_file = path_to_sorted_id_topb (absolute path) //line 39
 ```
 
-**4. edit [__init__.py](maskrcnn_benchmark/data/datasets/evaluation/lvis/__init__.py)**
+**4. edit [__init__.py](https://github.com/JoyHuYY1412/maskrcnn_base/blob/master/maskrcnn_benchmark/data/datasets/evaluation/lvis/__init__.py)**
 
 edit
 ```python
