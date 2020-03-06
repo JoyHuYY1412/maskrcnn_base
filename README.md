@@ -25,7 +25,7 @@ ln -s /path_to_generated_lvis_annotations datasets/lvis/annotations
 ```
 
 ## config to change ><
-**1. edit [e2e_mask_rcnn_R_50_FPN_1x_periodically_testing_topb_maskxrcnn_from_scratch.yaml](config/lvis/e2e_mask_rcnn_R_50_FPN_1x_periodically_testing_topb_maskxrcnn_from_scratch.yaml)
+**1. edit [e2e_mask_rcnn_R_50_FPN_1x_periodically_testing_topb_maskxrcnn_from_scratch.yaml](config/lvis/e2e_mask_rcnn_R_50_FPN_1x_periodically_testing_topb_maskxrcnn_from_scratch.yaml)**
 
 change
 ```python
@@ -39,7 +39,7 @@ OUTPUT_DIR: "./ckps/ckp-topb_freeze2_from_scratch"  //line 67
 TENSORBOARD_EXPERIMENT: "./logs-topb_freeze2_from_scratch/logs-top271_freeze2"
 ```
 
-**2. edit [paths_catalog.py](maskrcnn_benchmark/config/paths_catalog.py)
+**2. edit [paths_catalog.py](https://github.com/JoyHuYY1412/maskrcnn_base/blob/master/maskrcnn_benchmark/config/paths_catalog.py)**
 
 add
 ```python
@@ -53,14 +53,14 @@ add
         },
 ```
 
-**3. edit [lvis.py](maskrcnn_benchmark/data/datasets/lvis.py)
+**3. edit [lvis.py](maskrcnn_benchmark/data/datasets/lvis.py)**
 
 edit
 ```python
 sorted_id_file = path_to_sorted_id_topb (absolute path) //line 39
 ```
 
-**4. edit [__init__.py](maskrcnn_benchmark/data/datasets/evaluation/lvis/__init__.py)
+**4. edit [__init__.py](maskrcnn_benchmark/data/datasets/evaluation/lvis/__init__.py)**
 
 edit
 ```python
