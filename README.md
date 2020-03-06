@@ -33,7 +33,7 @@ DATASETS:         //line 50
   TEST: ("lvis_v0.5_val_topb",)
   
 OUTPUT_DIR: "./ckps/ckp-topb_freeze2_from_scratch"  //line 67
-TENSORBOARD_EXPERIMENT: "./logs-topb_freeze2_from_scratch/logs-top271_freeze2"
+TENSORBOARD_EXPERIMENT: "./logs-topb_freeze2_from_scratch/logs-topb_freeze2"
 ```
 
 **2. edit [paths_catalog.py](https://github.com/JoyHuYY1412/maskrcnn_base/blob/master/maskrcnn_benchmark/config/paths_catalog.py)**
