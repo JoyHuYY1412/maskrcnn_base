@@ -4,8 +4,6 @@
 
 Check [INSTALL.md](INSTALL.md) for installation instructions.
 
-## pretrained model
-
 ## LVIS dataset
 
 ### generate subset
