@@ -1,0 +1,61 @@
+MODEL:
+  GENERATE_DISTILL: True
+  META_ARCHITECTURE: "GeneralizedRCNN"
+  # WEIGHT: "catalog://ImageNetPretrained/MSRA/R-50"
+  # WEIGHT: "/mnt/data-disk0/xinting/LVIS/maskrcnn-benchmark/ckp-coco/e2e_mask_rcnn_R_50_FPN_1x_trimmed.pth"
+  WEIGHT: "ckp-finetune_step1_randqry_freeze4_4gpu_final/model_0019500_distill.pth"
+  QRY_BALANCE: True
+  QRY_INDICE_CLS: "/gruntdata0/xinting/project/dataset/LVIS/lvis_trainval_830/lvis_step1_4gpu/lvis_classes_qry_step1_rand_balanced.json"
+  BACKBONE:
+    CONV_BODY: "R-50-FPN"
+    FREEZE_CONV_BODY_AT: 4
+  RESNETS:
+    BACKBONE_OUT_CHANNELS: 256
+  RPN:
+    USE_FPN: True
+    ANCHOR_STRIDE: (4, 8, 16, 32, 64)
+    PRE_NMS_TOP_N_TRAIN: 2000
+    PRE_NMS_TOP_N_TEST: 1000
+    POST_NMS_TOP_N_TEST: 1000
+    FPN_POST_NMS_TOP_N_TEST: 1000
+  ROI_HEADS:
+    USE_FPN: True
+    BATCH_SIZE_PER_IMAGE: 256
+    POSITIVE_FRACTION: 0.5
+  ROI_BOX_HEAD:
+    POOLER_RESOLUTION: 7
+    POOLER_SCALES: (0.25, 0.125, 0.0625, 0.03125)
+    POOLER_SAMPLING_RATIO: 2
+    FEATURE_EXTRACTOR: "FPN2MLPCosineFeatureExtractor"
+    PREDICTOR: "FPNCosinePredictor"
+    NUM_CLASSES: 141 #copy 81 classes, the 1st one --background
+  ROI_MASK_HEAD:
+    POOLER_SCALES: (0.25, 0.125, 0.0625, 0.03125)
+    FEATURE_EXTRACTOR: "MaskRCNNFPNFeatureExtractor"
+    PREDICTOR: "MaskRCNNC4Predictor"
+    POOLER_RESOLUTION: 14
+    POOLER_SAMPLING_RATIO: 2
+    RESOLUTION: 28
+    SHARE_BOX_FEATURE_EXTRACTOR: False
+  MASK_ON: False
+  CLS_AGNOSTIC_BBOX_REG: True
+DATASETS:
+  # TRAIN: ("coco_2014_train", "coco_2014_valminusminival")
+  # TEST: ("coco_2014_minival",)
+  # TRAIN: ("lvis_v0.5_minival",)
+  # TEST: ("lvis_v0.5_minival",)
+  TRAIN: ("lvis_v0.5_train_step1",)  # here dataset is used for support and query
+  TEST: ("lvis_v0.5_val_step1",)
+DATALOADER:
+  SIZE_DIVISIBILITY: 32
+SOLVER:
+  BASE_LR: 0.002
+  WEIGHT_DECAY: 0.0001
+  STEPS: (5000, 10000)
+  MAX_ITER: 25000
+  TEST_PERIOD: 250  #per 2500 step do validation
+  CHECKPOINT_PERIOD: 250
+  IMS_PER_BATCH: 8
+#   VAL_SUP_ITERS: 1000 # the iterations for average the weights 
+OUTPUT_DIR: "./ckps/get_distill_step1_balanced"
+# TENSORBOARD_EXPERIMENT: "./logs-finetune_step2/logs-finetune_step2_randqry_freeze4_balanced_4gpu_final_loss"
