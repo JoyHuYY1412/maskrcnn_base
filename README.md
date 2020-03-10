@@ -61,7 +61,7 @@ sorted_id_file = path_to_sorted_id_topb (absolute path) //line 39
 
 edit
 ```python
-   gt_path="datasets/lvis/annotaions/lvis_v0.5_val_topb.json",   //line 16
+   gt_path="datasets/lvis/annotations/lvis_v0.5_val_topb.json",   //line 16
 ```
 
 ## code for training
