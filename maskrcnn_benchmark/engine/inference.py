@@ -19,7 +19,6 @@ def compute_on_dataset(model, data_loader, device, synchronize_gather=True, time
     model.eval()
     results_dict = {}
     cpu_device = torch.device("cpu")
-    torch.cuda.empty_cache()
     for _, batch in enumerate(tqdm(data_loader)):
         with torch.no_grad():
             images, targets, image_ids = batch
@@ -44,7 +43,6 @@ def compute_on_dataset(model, data_loader, device, synchronize_gather=True, time
             results_dict.update(
                 {img_id: result for img_id, result in zip(image_ids, output)}
             )
-    torch.cuda.empty_cache()
     return results_dict
 
 
@@ -96,7 +94,7 @@ def inference(
     total_timer = Timer()
     inference_timer = Timer()
     total_timer.tic()
-    predictions = compute_on_dataset(model, data_loader, device, inference_timer)
+    predictions = compute_on_dataset(model, data_loader, device, synchronize_gather=False, timer=inference_timer)
     # wait for all processes to complete before measuring the time
     synchronize()
     total_time = total_timer.toc()
@@ -115,7 +113,7 @@ def inference(
         )
     )
 
-    predictions = _accumulate_predictions_from_multiple_gpus(predictions)
+    predictions = _accumulate_predictions_from_multiple_gpus(predictions, synchronize_gather=False)
     if not is_main_process():
         return
 

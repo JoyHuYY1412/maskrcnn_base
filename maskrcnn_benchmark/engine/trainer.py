@@ -131,7 +131,7 @@ def do_train(
         if iteration % checkpoint_period == 0:
             checkpointer.save("model_{:07d}".format(iteration), **arguments)
 
-        if data_loader_val is not None and test_period > 0 and (iteration) % test_period == 0:
+        if data_loader_val is not None and test_period > 0 and iteration>4000 and (iteration) % test_period == 0:
             # meters_val = MetricLogger(delimiter="  ")
             synchronize()
             output_folder = os.path.join(cfg.OUTPUT_DIR, "Validation")
