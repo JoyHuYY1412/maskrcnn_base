@@ -1,6 +1,6 @@
 MODEL:
   META_ARCHITECTURE: "GeneralizedRCNN"
-  WEIGHT: "./ckps/ckp-top_270/model_0150000_trimmed.pth"
+  WEIGHT: "./ckps/ckp-top_270/model_0150000_for_finetune.pth"
   BACKBONE:
     CONV_BODY: "R-50-FPN"
     FREEZE_CONV_BODY_AT: 4
