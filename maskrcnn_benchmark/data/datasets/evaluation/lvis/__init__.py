@@ -13,7 +13,7 @@ def lvis_evaluation(
 ):
     return do_lvis_evaluation(
         dataset=dataset,
-        gt_path="datasets/lvis/lvis_v0.5_val.json",
+        gt_path="datasets/lvis/lvis_v0.5_val_step.json",
         # gt_path="datasets/lvis/lvis_trainval_1230/lvis_v0.5_val_top270.json",
         predictions=predictions,
         box_only=box_only,

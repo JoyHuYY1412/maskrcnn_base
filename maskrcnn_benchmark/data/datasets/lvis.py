@@ -36,7 +36,7 @@ def has_valid_annotation(anno):
     return False
 
 # sorted_id_file = "/gruntdata0/xinting/project/dataset/LVIS/lvis_trainval_1230/lvis_sorted_id_top270.json" #test: head:top 100; tail:500:508->100:108
-sorted_id_file = "/mnt/data-disk0/db_zhangdong/LVIS/lvis_sorted_id.json" #test: head:top 100; tail:500:508->100:108
+sorted_id_file = "/gruntdata0/xinting/project/dataset/LVIS/lvis_sorted_id.json" #test: head:top 100; tail:500:508->100:108
 
 # sorted_id_file = "/mnt/data-disk0/db_zhangdong/LVIS/lvis_trainval_830/lvis_step1_4gpu/lvis_sorted_id_step1.json" # test: head:top 100; tail:500:508->100:108
 with open(sorted_id_file, 'r') as f:
