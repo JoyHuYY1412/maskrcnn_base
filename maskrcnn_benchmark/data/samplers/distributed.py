@@ -83,8 +83,6 @@ class DistributedSamplerCAS(Sampler):
     """
 
     def __init__(self, dataset, num_replicas=None, rank=None, shuffle=True):
-        # import pdb; pdb.set_trace()
-
         if num_replicas is None:
             if not dist.is_available():
                 raise RuntimeError("Requires distributed package to be available")
@@ -100,8 +98,8 @@ class DistributedSamplerCAS(Sampler):
         self.indices_CAS = np.load(indices_CAS_file).tolist()
 
     def __iter__(self):
-            indices = self.indices_CAS[self.rank]
-            return iter(indices)
+        indices = self.indices_CAS[self.rank]
+        return iter(indices)
 
     def __len__(self):
         return len(self.indices_CAS[0])
