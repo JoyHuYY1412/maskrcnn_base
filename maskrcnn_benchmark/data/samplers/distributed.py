@@ -5,7 +5,8 @@ import math
 import torch
 import torch.distributed as dist
 from torch.utils.data.sampler import Sampler
-
+import json
+import numpy as np
 
 class DistributedSampler(Sampler):
     """Sampler that restricts data loading to a subset of the dataset.
@@ -64,3 +65,44 @@ class DistributedSampler(Sampler):
 
     def set_epoch(self, epoch):
         self.epoch = epoch
+
+
+class DistributedSamplerCAS(Sampler):
+    """Sampler that restricts data loading to a subset of the dataset.
+    It is especially useful in conjunction with
+    :class:`torch.nn.parallel.DistributedDataParallel`. In such case, each
+    process can pass a DistributedSampler instance as a DataLoader sampler,
+    and load a subset of the original dataset that is exclusive to it.
+    .. note::
+        Dataset is assumed to be of constant size.
+    Arguments:
+        dataset: Dataset used for sampling.
+        num_replicas (optional): Number of processes participating in
+            distributed training.
+        rank (optional): Rank of the current process within num_replicas.
+    """
+
+    def __init__(self, dataset, num_replicas=None, rank=None, shuffle=True):
+        # import pdb; pdb.set_trace()
+
+        if num_replicas is None:
+            if not dist.is_available():
+                raise RuntimeError("Requires distributed package to be available")
+            num_replicas = dist.get_world_size()
+        if rank is None:
+            if not dist.is_available():
+                raise RuntimeError("Requires distributed package to be available")
+            rank = dist.get_rank()
+        self.dataset = dataset
+        self.num_replicas = num_replicas
+        self.rank = rank
+        indices_CAS_file = "/mnt/data-disk2/xinting/project/dataset/LVIS/lvis_trainval_1230/lvis_CAS_indices.npy"
+        self.indices_CAS = np.load(indices_CAS_file).tolist()
+
+    def __iter__(self):
+            indices = self.indices_CAS[self.rank]
+            return iter(indices)
+
+    def __len__(self):
+        return len(self.indices_CAS[0])
+

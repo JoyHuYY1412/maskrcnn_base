@@ -57,7 +57,9 @@ def build_dataset(dataset_list, transforms, dataset_catalog, is_train=True):
     return [dataset]
 
 
-def make_data_sampler(dataset, shuffle, distributed):
+def make_data_sampler(dataset, shuffle, distributed, USE_CAS=False):
+    if USE_CAS:
+        return samplers.DistributedSamplerCAS(dataset)
     if distributed:
         return samplers.DistributedSampler(dataset, shuffle=shuffle)
     if shuffle:
@@ -105,7 +107,7 @@ def make_batch_data_sampler(
     return batch_sampler
 
 
-def make_data_loader(cfg, is_train=True, is_distributed=False, start_iter=0, is_for_period=False):
+def make_data_loader(cfg, is_train=True, is_distributed=False, start_iter=0, is_for_period=False, USE_CAS=False):
     num_gpus = get_world_size()
     if is_train:
         images_per_batch = cfg.SOLVER.IMS_PER_BATCH
@@ -116,6 +118,7 @@ def make_data_loader(cfg, is_train=True, is_distributed=False, start_iter=0, is_
         images_per_gpu = images_per_batch // num_gpus
         shuffle = True
         num_iters = cfg.SOLVER.MAX_ITER
+        USE_CAS = cfg.SOLVER.USE_CAS
     else:
         images_per_batch = cfg.TEST.IMS_PER_BATCH
         assert (
@@ -161,7 +164,7 @@ def make_data_loader(cfg, is_train=True, is_distributed=False, start_iter=0, is_
 
     data_loaders = []
     for dataset in datasets:
-        sampler = make_data_sampler(dataset, shuffle, is_distributed)
+        sampler = make_data_sampler(dataset, shuffle, is_distributed, USE_CAS)
         batch_sampler = make_batch_data_sampler(
             dataset, sampler, aspect_grouping, images_per_gpu, num_iters, start_iter
         )
